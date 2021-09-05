@@ -28,7 +28,7 @@ client.on("ready", () => {
         );
       })
       .catch((err) => {
-        console.log("API call error:", err.message);
+        console.log("ERROR:", err);
       });
   }, MS_INTERVAL);
 });
