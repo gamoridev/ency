@@ -2,21 +2,14 @@ require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 const rp = require("request-promise");
 
-const { DISCORD_BOT_TOKEN, COIN_NAME, COINMARKET_API } = process.env;
+const { DISCORD_BOT_TOKEN, COIN_ID } = process.env;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const COIN_CURRENCY = "BRL";
-const MS_INTERVAL = 60000;
+const MS_INTERVAL = 10000;
 const requestOptions = {
   method: "GET",
-  uri: "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest",
-  qs: {
-    convert: COIN_CURRENCY,
-    symbol: COIN_NAME,
-  },
-  headers: {
-    "X-CMC_PRO_API_KEY": COINMARKET_API,
-  },
+  uri: `https://api.coingecko.com/api/v3/coins/${COIN_ID}`,
   json: true,
   gzip: true,
 };
@@ -24,16 +17,10 @@ const requestOptions = {
 client.on("ready", () => {
   setInterval(() => {
     rp(requestOptions)
-      .then((response) => {
-        const { data } = response;
-
-        const coin_info = {
-          name: data[COIN_NAME].name,
-          price: data[COIN_NAME]["quote"][COIN_CURRENCY].price,
-        };
+      .then(({ symbol, market_data }) => {
 
         client.user.setActivity(
-          `${COIN_NAME} a ${coin_info.price.toLocaleString("pt-BR", {
+          `${symbol.toUpperCase()} a ${market_data.current_price.brl.toLocaleString("pt-BR", {
             style: "currency",
             currency: COIN_CURRENCY,
           })}`,
