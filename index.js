@@ -6,7 +6,7 @@ const { DISCORD_BOT_TOKEN, COIN_NAME, COINMARKET_API } = process.env;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const COIN_CURRENCY = "BRL";
-const MS_INTERVAL = 10000;
+const MS_INTERVAL = 60000;
 const requestOptions = {
   method: "GET",
   uri: "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest",
