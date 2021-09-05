@@ -2,10 +2,9 @@ require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 const rp = require("request-promise");
 
-const { DISCORD_BOT_TOKEN, COINMARKET_API } = process.env;
+const { DISCORD_BOT_TOKEN, COIN_NAME, COINMARKET_API } = process.env;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
-const COIN_SYMBOL = "PVU";
 const COIN_CURRENCY = "BRL";
 const MS_INTERVAL = 10000;
 const requestOptions = {
@@ -13,7 +12,7 @@ const requestOptions = {
   uri: "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest",
   qs: {
     convert: COIN_CURRENCY,
-    symbol: COIN_SYMBOL,
+    symbol: COIN_NAME,
   },
   headers: {
     "X-CMC_PRO_API_KEY": COINMARKET_API,
@@ -29,12 +28,12 @@ client.on("ready", () => {
         const { data } = response;
 
         const coin_info = {
-          name: data[COIN_SYMBOL].name,
-          price: data[COIN_SYMBOL]["quote"][COIN_CURRENCY].price,
+          name: data[COIN_NAME].name,
+          price: data[COIN_NAME]["quote"][COIN_CURRENCY].price,
         };
 
         client.user.setActivity(
-          `${COIN_SYMBOL} a ${coin_info.price.toLocaleString("pt-BR", {
+          `${COIN_NAME} a ${coin_info.price.toLocaleString("pt-BR", {
             style: "currency",
             currency: COIN_CURRENCY,
           })}`,
