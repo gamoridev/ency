@@ -1,6 +1,8 @@
 # Show current cryptocoin currency in Activity of a configured bot
 
-You'll need: _NodeJs_
+It's currently using [Coingecko's API](https://www.coingecko.com/pt/api/documentation). But you can change to any other you want.
+
+### You'll need: _NodeJs_
 
 ## set
 
