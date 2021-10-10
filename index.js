@@ -17,14 +17,20 @@ const requestOptions = {
 client.on("ready", () => {
   setInterval(() => {
     rp(requestOptions)
-      .then(({ symbol, market_data }) => {
+      .then(({ market_data }) => {
+        const price = market_data.current_price.brl.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: COIN_CURRENCY,
+        });
+
+        const percent_24h = market_data.price_change_percentage_24h;
+        const arrow = percent_24h > 0 ? "↗" : "↘";
 
         client.user.setActivity(
-          `${symbol.toUpperCase()} a ${market_data.current_price.brl.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: COIN_CURRENCY,
-          })}`,
-          { type: "PLAYING" }
+          `${price} ${arrow} ${percent_24h.toFixed(2)}%`,
+          {
+            type: "PLAYING",
+          }
         );
       })
       .catch((err) => {
