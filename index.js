@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Client, Intents } = require("discord.js");
 const rp = require("request-promise");
+const http = require("http");
 
 const { DISCORD_BOT_TOKEN, COIN_ID } = process.env;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
@@ -41,7 +42,6 @@ client.on("ready", () => {
 
 client.login(DISCORD_BOT_TOKEN);
 
-const http = require("http");
 const server = http.createServer((req, res) => {
   res.writeHead(200);
   res.end("ok");
