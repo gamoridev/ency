@@ -6,7 +6,7 @@ const http = require("http");
 const { DISCORD_BOT_TOKEN, COIN_ID } = process.env;
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
-const COIN_CURRENCY = "BRL";
+const COIN_CURRENCY = "USD";
 const MS_INTERVAL = 10000;
 const requestOptions = {
   method: "GET",
@@ -19,7 +19,7 @@ client.on("ready", () => {
   setInterval(() => {
     rp(requestOptions)
       .then(({ market_data }) => {
-        const price = market_data.current_price.brl.toLocaleString("pt-BR", {
+        const price = market_data.current_price.usd.toLocaleString("en-US", {
           style: "currency",
           currency: COIN_CURRENCY,
         });
